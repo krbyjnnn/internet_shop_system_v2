@@ -17,7 +17,7 @@ class RoleMiddleware
     {
         if (!auth()->check())
         {
-            return redirect('login');
+            return redirect('/login');
         }
 
         if (auth()->user()->role !== $role) 

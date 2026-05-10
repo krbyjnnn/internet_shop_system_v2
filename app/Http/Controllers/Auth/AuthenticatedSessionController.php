@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Station;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class AuthenticatedSessionController extends Controller
         // Validate input
         $request->validate([
             'username'  => 'required|string',
-            'pasword'   => 'required|string'
+            'password'   => 'required|string'
         ]);
 
         // Attempt login
@@ -33,8 +34,7 @@ class AuthenticatedSessionController extends Controller
             'password' => $request->password
         ])) {
             return back()->withErrors([
-                'username' => 'Invalid credentials',
-                'password' => 'Invalid credentials'
+                'username' => 'Invalid username or password'
             ])->withInput();
         }
 
@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
         if(Auth::user()->role === 'admin')
             {
                 $request->session()->regenerate();
-                return redirect()->route('/admin/dashboard'); 
+                return redirect()->route('admin.dashboard'); 
             }
 
         // Phase 2: Station Assignment (for customers)
@@ -65,7 +65,7 @@ class AuthenticatedSessionController extends Controller
             }
         
         // Verify station password
-        if($station->password !== $request->station_passowrd)
+        if($station->password !== $request->station_password)
             {
                 Auth::logout();
                 return back()->withErrors([
@@ -78,10 +78,14 @@ class AuthenticatedSessionController extends Controller
             'is_occupied' => true,
             'user_id' => Auth::id()
         ]);
+
+        Auth::user()->update([
+            'station_id' => $station->id
+        ]);
         
         // Regenerate session and redirect to customer dashboard
         $request->session()->regenerate();
-        return redirect()->route('/customer/dashboard');
+        return redirect()->route('customer.dashboard');
     }  
 
     // Logout and free up station

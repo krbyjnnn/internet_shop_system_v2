@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => App\Http\Middleware\RoleMiddleware::class,
         ]);
+
+        $middleware->redirectGuestsTo('/login');
+        $middleware->redirectUsersTo('admin/dashboard');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

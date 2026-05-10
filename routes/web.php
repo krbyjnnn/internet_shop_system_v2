@@ -7,6 +7,12 @@ use App\Http\Controllers\Customer\CustomerController;
 
 // Redirect root to login
 Route::get('/', function () {
+    if (auth()->check()) {
+        if (auth()->user()->role === 'admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('customer.dashboard');
+    }
     return redirect()->route('login');
 });
 
@@ -25,6 +31,11 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])
         ->name('dashboard');
+
+    // Customers
+    Route::get('/customers', [AdminController::class, 'customers'])->name('customers');
+    Route::post('/customers/store', [AdminController::class, 'storeCustomer'])->name('customers.store');
+    Route::post('/customers/topup', [AdminController::class, 'topUp'])->name('customers.topup');   
 });
 
 // Customer routes
