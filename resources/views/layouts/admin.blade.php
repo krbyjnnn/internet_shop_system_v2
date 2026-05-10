@@ -24,13 +24,22 @@
                 class="{{ request()->routeIs('admin.customers*') ? 'active' : '' }}">
                     Customers
                 </a>
-                <a href="#" class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
+                <a href="{{ route('admin.products') }}" 
+                class="{{ request()->routeIs('admin.products*') ? 'active' : '' }}">
                     Products
                 </a>
-                <a href="#" class="{{ request()->routeIs('admin.orders*') ? 'active' : '' }}">
+                <a href="{{ route('admin.orders') }}" 
+                class="{{ request()->routeIs('admin.orders*') ? 'active' : '' }}">
                     Orders
+                    @php
+                        $pendingCount = \App\Models\Order::where('status', 'pending')->count();
+                    @endphp
+                    @if($pendingCount > 0)
+                        <span class="nav-badge">{{ $pendingCount }}</span>
+                    @endif
                 </a>
-                <a href="#" class="{{ request()->routeIs('admin.reports*') ? 'active' : '' }}">
+                <a href="{{ route('admin.reports') }}" 
+                class="{{ request()->routeIs('admin.reports*') ? 'active' : '' }}">
                     Reports
                 </a>
             </nav>

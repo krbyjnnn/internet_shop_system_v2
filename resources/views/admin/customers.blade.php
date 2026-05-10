@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('title', 'Customers')
+
+@push('styles')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+@endpush
+
 @section('content')
 
 @if(session('success'))
@@ -38,12 +43,12 @@
         <form method="POST" action="{{ route('admin.customers.topup') }}">
             @csrf
             <div class="form-group">
-                <label>Select Customer</label>
-                <select name="user_id">
-                    <option value="">-- Select Customer --</option>
+                <label>Search Customer</label>
+                <select name="user_id" id="customer-select">
+                    <option value="">-- Search customer --</option>
                     @foreach($customers as $customer)
                         <option value="{{ $customer->id }}">
-                            {{ $customer->name }} (₱{{ $customer->balance }})
+                            {{ $customer->name }} ({{ $customer->username }}) — ₱{{ $customer->balance }}
                         </option>
                     @endforeach
                 </select>
@@ -94,3 +99,16 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#customer-select').select2({
+            placeholder: '-- Search customer --',
+            allowClear: true
+        });
+    });
+</script>
+@endpush

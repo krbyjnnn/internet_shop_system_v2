@@ -274,3 +274,233 @@ body {
     margin-top: 4px;
     display: block;
 }
+
+.btn-danger {
+    padding: 6px 12px;
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+.btn-edit {
+    padding: 6px 12px;
+    background-color: #334155;
+    color: #f1f5f9;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.btn-edit:hover {
+    background-color: #475569;
+}
+
+.btn-secondary {
+    padding: 10px 20px;
+    background-color: #334155;
+    color: #f1f5f9;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background-color: #475569;
+}
+
+.out-of-stock-row td {
+    opacity: 0.5;
+}
+
+.badge-gray {
+    background-color: #334155;
+    color: #94a3b8;
+}
+
+.badge-blue {
+    background-color: #1e3a5f;
+    color: #93c5fd;
+}
+
+.btn-secondary {
+    padding: 8px 16px;
+    background-color: #334155;
+    color: #f1f5f9;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    width: auto;
+}
+
+.btn-secondary:hover {
+    background-color: #475569;
+}
+
+/* Select2 Custom Styles */
+.select2-container--default .select2-selection--single {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #f1f5f9;
+    font-size: 14px;
+    padding: 0;
+    line-height: normal;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+    right: 10px;
+}
+
+.select2-dropdown {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.select2-container--default .select2-results__option {
+    color: #f1f5f9;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+.select2-container--default .select2-results__option--highlighted {
+    background-color: #6366f1;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-results__options {
+    background-color: #1e293b;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    background-color: #6366f1;
+    color: #ffffff;
+}
+
+.select2-container--default .select2-results__option--selected {
+    background-color: #334155;
+    color: #f1f5f9;
+}
+
+/* Report Cards */
+.report-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.report-card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.report-label {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.report-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #6366f1;
+}
+
+.report-sub {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.nav-badge {
+    background-color: #ef4444;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 11px;
+    margin-left: auto;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+}
+
+.order-group {
+    margin-bottom: 24px;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.order-group-header {
+    background-color: #334155;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.order-group-header span:last-child {
+    margin-left: auto;
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.btn-force-logout {
+    width: 100%;
+    padding: 6px;
+    background-color: rgba(0,0,0,0.3);
+    color: #fca5a5;
+    border: 1px solid #ef4444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.btn-force-logout:hover {
+    background-color: #ef4444;
+    color: white;
+}
