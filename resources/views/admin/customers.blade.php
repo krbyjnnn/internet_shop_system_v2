@@ -59,6 +59,14 @@
                 <input type="number" name="amount" placeholder="Enter amount" min="1">
                 @error('amount')<span class="error">{{ $message }}</span>@enderror
             </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select name="payment_method">
+                    <option value="cash">Cash</option>
+                    <option value="gcash">GCash</option>
+                </select>
+                @error('payment_method')<span class="error">{{ $message }}</span>@enderror
+            </div>
             <button type="submit" class="btn-primary">Top Up</button>
         </form>
     </div>

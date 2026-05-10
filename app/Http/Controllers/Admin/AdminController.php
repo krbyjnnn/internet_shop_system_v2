@@ -48,17 +48,18 @@ class AdminController extends Controller
     public function topUp(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'amount'  => 'required|numeric|min:1',
+            'user_id'        => 'required|exists:users,id',
+            'amount'         => 'required|numeric|min:1',
+            'payment_method' => 'required|in:cash,gcash',
         ]);
 
         $user = User::find($request->user_id);
         $user->increment('balance', $request->amount);
 
-        // Record the top-up
         Topup::create([
-            'user_id' => $user->id,
-            'amount'  => $request->amount,
+            'user_id'        => $user->id,
+            'amount'         => $request->amount,
+            'payment_method' => $request->payment_method,
         ]);
 
         return back()->with('success', 'Balance topped up successfully!');
@@ -181,6 +182,11 @@ class AdminController extends Controller
             ->groupBy('payment_method')
             ->get();
 
+        // Top-up payment breakdown
+        $topupBreakdown = Topup::selectRaw('payment_method, COUNT(*) as count, SUM(amount) as total')
+            ->groupBy('payment_method')
+            ->get();
+
         return view('admin.reports', compact(
             'dailyOrders',
             'dailyShopTotal',
@@ -190,7 +196,8 @@ class AdminController extends Controller
             'allTimeTopupTotal',
             'allTimeOrders',
             'allTimeTopups',
-            'paymentBreakdown'
+            'paymentBreakdown',
+            'topupBreakdown'
         ));
     }
     
