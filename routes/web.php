@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Customer\CustomerController;
+
+// New Admin Controllers
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ReportController;
 
 // Redirect root to login
 Route::get('/', function () {
@@ -18,43 +24,39 @@ Route::get('/', function () {
 
 // Auth routes (login/logout)
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-        ->name('login.store');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
 });
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 // Admin routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     
-    // Customers
-    Route::get('/customers', [AdminController::class, 'customers'])->name('customers');
-    Route::post('/customers/store', [AdminController::class, 'storeCustomer'])->name('customers.store');
-    Route::post('/customers/topup', [AdminController::class, 'topUp'])->name('customers.topup');
+    // Dashboard & Stations
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/stations/{station}/force-logout', [AdminController::class, 'forceLogout'])->name('stations.force-logout');
+
+    // Customers (Using AdminCustomerController to avoid conflict with the Customer namespace)
+    Route::get('/customers', [AdminCustomerController::class, 'index'])->name('customers');
+    Route::post('/customers/store', [AdminCustomerController::class, 'store'])->name('customers.store');
+    Route::post('/customers/topup', [AdminCustomerController::class, 'topUp'])->name('customers.topup');
 
     // Products
-    Route::get('/products', [AdminController::class, 'products'])->name('products');
-    Route::post('/products/store', [AdminController::class, 'storeProduct'])->name('products.store');
-    Route::get('/products/{product}/edit', [AdminController::class, 'editProduct'])->name('products.edit');
-    Route::put('/products/{product}', [AdminController::class, 'updateProduct'])->name('products.update');
-    Route::delete('/products/{product}', [AdminController::class, 'destroyProduct'])->name('products.destroy');
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
+    Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     // Orders
-    Route::get('/orders', [AdminController::class, 'orders'])->name('orders');
-    Route::post('/orders/{order}/deliver', [AdminController::class, 'deliverOrder'])->name('orders.deliver');
-    Route::get('/orders/history', [AdminController::class, 'orderHistory'])->name('orders.history');
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+    Route::post('/orders/{order}/deliver', [OrderController::class, 'deliver'])->name('orders.deliver');
+    Route::post('/orders/deliver-group', [OrderController::class, 'deliverGroup'])->name('orders.deliver-group');
+    Route::get('/orders/history', [OrderController::class, 'history'])->name('orders.history');
 
     // Reports
-    Route::get('/reports', [AdminController::class, 'reports'])->name('reports');
-
-    Route::post('/orders/deliver-group', [AdminController::class, 'deliverGroup'])->name('orders.deliver-group');
-
-    // Inside admin group
-    Route::post('/stations/{station}/force-logout', [AdminController::class, 'forceLogout'])->name('stations.force-logout');
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 });
 
 // Customer routes
@@ -64,4 +66,3 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/expired', [CustomerController::class, 'expired'])->name('expired');
     Route::get('/locked', [CustomerController::class, 'locked'])->name('locked');
 });
-

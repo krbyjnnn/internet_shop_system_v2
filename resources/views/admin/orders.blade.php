@@ -21,7 +21,7 @@
         <div class="order-group">
             <div class="order-group-header">
                 <span>{{ $orders->first()->station->name }}</span>
-                <span>{{ $orders->first()->user->name }}</span>
+                <span>{{ $orders->first()->user->name }}</span> 
                 <span class="order-group-count">{{ $orders->count() }} item(s)</span>
                 <form method="POST" action="{{ route('admin.orders.deliver-group') }}" style="margin-left:auto;">
                     @csrf
@@ -55,7 +55,9 @@
                                 {{ ucfirst($order->payment_method) }}
                             </span>
                         </td>
-                        <td>{{ $order->created_at->diffForHumans() }}</td>
+                        <td title="{{ $order->created_at }}">
+                            {{ $order->created_at->diffForHumans() }}
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

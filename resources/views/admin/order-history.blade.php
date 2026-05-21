@@ -49,7 +49,9 @@
                         {{ ucfirst($order->status) }}
                     </span>
                 </td>
-                <td>{{ $order->created_at->diffForHumans() }}</td>
+                <td title="{{ $order->created_at }}">
+                    {{ $order->created_at->diffForHumans() }}
+                </td>
             </tr>
             @endforeach
         </tbody>

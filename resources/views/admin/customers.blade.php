@@ -20,7 +20,7 @@
             @csrf
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" name="name" value="{{ old('name') }}" placeholder="Full name">
+                <input type="text" name="name" value="{{ old('name') }}" placeholder="Name or full name">
                 @error('name')<span class="error">{{ $message }}</span>@enderror
             </div>
             <div class="form-group">
